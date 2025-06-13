@@ -20,7 +20,7 @@ def product():
                                           "negative_quantity",
                                           "over_maximize"
                                           ], ids=gen_ids)
-def get_test_for_check_quantity(request, product):
+def cases_for_check_quantity(request, product):
     case_type = request.param
     if case_type == "valid_quantity":
         return [product.quantity, True]
@@ -32,6 +32,20 @@ def get_test_for_check_quantity(request, product):
         return [product.quantity + 1, False]
 
 
+@pytest.fixture(params=["max_value", "min_value", "zero_value"], ids=gen_ids)
+def cases_for_product_buy(product, request):
+    case = request.param
+    if case == "max_value":
+        return [product.quantity, product.quantity - product.quantity]
+    elif case == "min_value":
+        if 0 <= product.quantity <= 1:
+            return [product.quantity, 0]
+        else:
+            return [1, product.quantity - 1]
+    else:
+        return [0, product.quantity]
+
+
 class TestProducts:
     """
     Тестовый класс - это способ группировки ваших тестов по какой-то тематике
@@ -39,18 +53,18 @@ class TestProducts:
     """
 
 
-    def test_product_check_quantity(self, product, get_test_for_check_quantity):
+    def test_product_check_quantity(self, product, cases_for_check_quantity):
         # TODO напишите проверки на метод check_quantity
-        case_params = get_test_for_check_quantity
+        case_params = cases_for_check_quantity
         assert product.check_quantity(case_params[0]) == case_params[1]
 
 
-    def test_product_buy(self, product):
+    def test_product_buy(self, product, cases_for_product_buy):
         # TODO напишите проверки на метод buy
         product_counts = product.quantity
         product.buy(product_counts)
         assert product.quantity == (product_counts - product_counts)
-        pass
+
 
     def test_product_buy_more_than_available(self, product):
         # TODO напишите проверки на метод buy,
