@@ -21,7 +21,7 @@ class Product:
         TODO Верните True если количество продукта больше или равно запрашиваемому
             и False в обратном случае
         """
-        return True if self.quantity >= quantity else False
+        return True if (self.quantity >= quantity >= 0) else False
 
 
     def buy(self, quantity):
@@ -58,7 +58,13 @@ class Cart:
         Метод добавления продукта в корзину.
         Если продукт уже есть в корзине, то увеличиваем количество
         """
-        raise NotImplementedError
+        if product.name in self.products.keys():
+            self.products[product.name] += buy_count
+        else:
+            self.products[product.name] = buy_count
+
+        # raise NotImplementedError
+
 
     def remove_product(self, product: Product, remove_count=None):
         """
