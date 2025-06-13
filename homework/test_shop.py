@@ -69,7 +69,10 @@ class TestProducts:
     def test_product_buy_more_than_available(self, product):
         # TODO напишите проверки на метод buy,
         #  которые ожидают ошибку ValueError при попытке купить больше, чем есть в наличии
-        pass
+        other_max_value = product.quantity + 1
+        with pytest.raises(ValueError) as exc:
+            product.buy(other_max_value)
+        assert exc.typename == 'ValueError'
 
 
 class TestCart:
@@ -79,3 +82,4 @@ class TestCart:
         На некоторые методы у вас может быть несколько тестов.
         Например, негативные тесты, ожидающие ошибку (используйте pytest.raises, чтобы проверить это)
     """
+
