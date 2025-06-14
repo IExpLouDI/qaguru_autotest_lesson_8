@@ -3,7 +3,7 @@
 """
 import pytest
 
-from homework.models import Product
+from homework.models import Product, Cart
 
 
 def gen_ids(fixture_value):
@@ -13,6 +13,11 @@ def gen_ids(fixture_value):
 @pytest.fixture
 def product():
     return Product("book", 100, "This is a book", 1000)
+
+
+@pytest.fixture
+def gen_product_cart(product):
+    return Cart().add_product(product)
 
 
 @pytest.fixture(scope="function", params=["valid_quantity",
@@ -83,3 +88,5 @@ class TestCart:
         Например, негативные тесты, ожидающие ошибку (используйте pytest.raises, чтобы проверить это)
     """
 
+    def test_all(self, gen_product_cart):
+        print(1)
