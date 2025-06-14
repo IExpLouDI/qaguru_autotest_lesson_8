@@ -16,8 +16,8 @@ def product():
 
 
 @pytest.fixture
-def gen_product_cart(product):
-    return Cart().add_product(product)
+def cart(product):
+    return Cart()
 
 
 @pytest.fixture(scope="function", params=["valid_quantity",
@@ -88,5 +88,5 @@ class TestCart:
         Например, негативные тесты, ожидающие ошибку (используйте pytest.raises, чтобы проверить это)
     """
 
-    def test_all(self, gen_product_cart):
+    def test_all(self, cart, product):
         print(1)
