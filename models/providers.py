@@ -1,6 +1,7 @@
 import csv
 
 from models.users import User, Status
+from utils.paths import USERS_DATA
 
 
 class UserProvider:
@@ -12,7 +13,7 @@ class UserProvider:
 class CsvUserProvider(UserProvider):
 
     def get_users(self) -> list[User]:
-        with open("users.csv") as f:
+        with open(USERS_DATA) as f:
             users = list(csv.DictReader(f, delimiter=";"))
         return [
             User(name=user["name"],

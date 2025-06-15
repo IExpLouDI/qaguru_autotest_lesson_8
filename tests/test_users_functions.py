@@ -1,6 +1,6 @@
 import csv
-
 import pytest
+from utils.paths import USERS_DATA
 
 
 # -------------------------------------------------------------------
@@ -11,7 +11,7 @@ import pytest
 
 @pytest.fixture
 def users():
-    with open("users.csv") as f:
+    with open(USERS_DATA) as f:
         users = list(csv.DictReader(f, delimiter=";"))
     return users
 
