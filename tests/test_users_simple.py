@@ -1,5 +1,5 @@
-
 import csv
+from utils.paths import USERS_DATA
 
 # -------------------------------------------------------------------
 # Прямолинейный вариант теста
@@ -10,7 +10,7 @@ def test_workers_are_adults():
     """
     Тестируем, что все работники старше 18 лет
     """
-    with open("users.csv") as f:
+    with open(USERS_DATA) as f:
         users = csv.DictReader(f, delimiter=";")
         workers = [user for user in users if user["status"] == "worker"]
 
