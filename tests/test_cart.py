@@ -1,7 +1,7 @@
 import random
-from tabnanny import check
-
 import pytest
+
+from tests.conftest import product
 
 
 class TestCart:
@@ -84,5 +84,17 @@ class TestCart:
         assert result_total_price == cart.get_total_price()
 
 
-    def test_buy_(self):
-        pass
+    def test_buy_more_then_exists_in_product(self, cart, product):
+        max_count = product.quantity
+        cart.add_product(product, max_count + 1)
+        with pytest.raises(ValueError) as exc:
+            cart.buy()
+        assert exc.typename == 'ValueError'
+
+
+    def test_buy_some_product(self, cart, product):
+        product_quantity = product.quantity
+        add_product = random.randint(1, product.quantity)
+        cart.add_product(product,add_product)
+        cart.buy()
+        assert (product.quantity == product_quantity - add_product) and (product not in cart.products)

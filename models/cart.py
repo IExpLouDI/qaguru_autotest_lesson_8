@@ -65,3 +65,4 @@ class Cart:
         # товара на складе
         for position, count in self.products.items():
             position.buy(count)
+        self.clear()

@@ -1,3 +1,5 @@
+import random
+
 import pytest
 
 from models.product import Product
