@@ -8,12 +8,12 @@ def gen_ids(fixture_value):
 	return f"Test - {fixture_value}"
 
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 def product():
 	return Product("book", 100, "This is a book", 1000)
 
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 def cart(product):
 	return Cart()
 
